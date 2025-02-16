@@ -1,26 +1,53 @@
-const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/userModel');
 require('dotenv').config();
+const argon2 = require('argon2');
 
-exports.register = (req, res) => {
-  const { name, email, password, birth_date, gender, city, profile_picture } = req.body;
+exports.register = async (req, res) => {
+    const { name, email, password, birth_date, gender, city, profile_picture } = req.body;
 
-  if (!name || !email || !password || !gender) {
-    return res.status(400).json({ error: 'Faltan datos obligatorios' });
-  }
+    // Validación de campos obligatorios
+    if (!name || !email || !password || !gender) {
+        return res.status(400).json({ error: 'Faltan datos obligatorios' });
+    }
 
-  bcrypt.hash(password, 10, (err, hash) => {
-    if (err) return res.status(500).json({ error: err.message });
+    try {
+        // Verificar si el usuario ya existe
+        const existingUser  = await new Promise((resolve, reject) => {
+            User.findByEmail(email, (err, results) => {
+                if (err) return reject(err);
+                resolve(results);
+            });
+        });
 
-    User.create(name, email, hash, birth_date, gender, city, profile_picture, (err, result) => {
-      if (err) return res.status(500).json({ error: err.message });
+        if (existingUser .length > 0) {
+            return res.status(400).json({ error: 'El correo electrónico ya está en uso' });
+        }
 
-      res.status(201).json({ message: 'Usuario registrado correctamente' });
-    });
-  });
+        // Encriptar la contraseña
+        const hashedPassword = await argon2.hash(password);
+
+        // Guardar el usuario con la contraseña encriptada
+        await new Promise((resolve, reject) => {
+            User.create({ 
+                name, 
+                email, 
+                password: hashedPassword, 
+                birth_date, 
+                gender, 
+                city, 
+                profile_picture: profile_picture || null 
+            }, (err, result) => {
+                if (err) return reject(err);
+                resolve(result);
+            });
+        });
+
+        res.status(201).json({ message: 'Usuario registrado correctamente' });
+    } catch (err) {
+        return res.status(500).json({ error: `Error al registrar el usuario: ${err.message}` });
+    }
 };
-
 
 exports.login = (req, res) => {
     const { email, password } = req.body;
