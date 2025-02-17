@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/userModel');
 require('dotenv').config();
-const argon2 = require('argon2');
+const md5 = require('md5'); 
 
 exports.register = async (req, res) => {
     const { name, email, password, birth_date, gender, city, profile_picture } = req.body;
@@ -25,14 +25,15 @@ exports.register = async (req, res) => {
         }
 
         // Encriptar la contraseña
-        const hashedPassword = await argon2.hash(password);
+        const salt_string = process.env.MD5_SALT_STRING;
+        const safe_password = md5(password + salt_string);
 
         // Guardar el usuario con la contraseña encriptada
         await new Promise((resolve, reject) => {
             User.create({ 
                 name, 
                 email, 
-                password: hashedPassword, 
+                password: safe_password, 
                 birth_date, 
                 gender, 
                 city, 
@@ -53,25 +54,27 @@ exports.login = (req, res) => {
     const { email, password } = req.body;
   
     User.findByEmail(email, (err, results) => {
-      if (err) return res.status(500).json({ error: err.message });
-  
-      if (results.length === 0) return res.status(401).json({ error: 'Usuario no encontrado' });
-  
-      const user = results[0];
-  
-      bcrypt.compare(password, user.password, (err, isMatch) => {
         if (err) return res.status(500).json({ error: err.message });
   
-        if (!isMatch) return res.status(401).json({ error: 'Contraseña incorrecta' });
+        if (results.length === 0) return res.status(401).json({ error: 'Usuario no encontrado' });
   
-        const token = jwt.sign(
-          { id: user.user_id, name: user.name, email: user.email },
-          process.env.JWT_SECRET,
-          { expiresIn: '1h' }
-        );
-  
-        res.json({ message: 'Login exitoso', token });
+        const user = results[0];
+        
+        const salt_string = process.env.MD5_SALT_STRING;
+        const safe_password = md5(password + salt_string);
+
+        if (safe_password !== user.password) {
+            return res.status(401).json({ error: 'Contraseña incorrecta' });
+        }else{
+            const token = jwt.sign(
+                { id: user.user_id, name: user.name, email: user.email },
+                process.env.JWT_SECRET,
+                { expiresIn: '1h' }
+              );
+        
+              res.json({ message: 'Login exitoso', token });
+        }
+      
       });
-    });
   };
   
