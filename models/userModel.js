@@ -2,11 +2,11 @@ const db = require('../config/database');
 
 const User = {
     create: (userData, callback) => {
-      const { name, email, password, birth_date, gender, city, profile_picture } = userData;
+      const { name, username, email, password, birth_date, gender, city, profile_picture } = userData;
   
       db.query(
-        'INSERT INTO users (name, email, password, birth_date, gender, city, profile_picture) VALUES (?, ?, ?, ?, ?, ?, ?)',
-        [name, email, password, birth_date, gender, city, profile_picture],
+        'INSERT INTO users (name, username, email, password, birth_date, gender, city, profile_picture) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+        [name, username, email, password, birth_date, gender, city, profile_picture],
         callback
       );
     },

@@ -4,10 +4,10 @@ require('dotenv').config();
 const md5 = require('md5'); 
 
 exports.register = async (req, res) => {
-    const { name, email, password, birth_date, gender, city, profile_picture } = req.body;
+    const { name, email, username, password, birth_date, gender, city, profile_picture } = req.body;
 
     // Validación de campos obligatorios
-    if (!name || !email || !password || !gender) {
+    if (!name || !email || !password || !gender || !username) {
         return res.status(400).json({ error: 'Faltan datos obligatorios' });
     }
 
@@ -32,7 +32,8 @@ exports.register = async (req, res) => {
         await new Promise((resolve, reject) => {
             User.create({ 
                 name, 
-                email, 
+                username,
+                email,
                 password: safe_password, 
                 birth_date, 
                 gender, 
