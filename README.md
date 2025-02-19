@@ -160,3 +160,4 @@ Guarda los mensajes en chats individuales o grupales.
 ##  **¿Cómo Mostrar los Amigos en el Swipe?**
 🔹 **Priorizar amigos del match en la búsqueda.**  
 
+![ER - DATABASE](2pa-app.png)
