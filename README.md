@@ -14,6 +14,7 @@ Guarda los datos de cada usuario.
 |------------------|------------|-------------------------------|
 | user_id         | INT (PK)   | Identificador único de usuario |
 | name           | VARCHAR    | Nombre del usuario            |
+| username           | VARCHAR    | Nickname del usuario            |
 | email          | VARCHAR    | Correo electrónico            |
 | password       | VARCHAR    | Contraseña encriptada         |
 | birth_date     | DATE       | Fecha de nacimiento           |
