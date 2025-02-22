@@ -13,7 +13,16 @@ const User = {
   
     findByEmail: (email, callback) => {
       db.query('SELECT * FROM users WHERE email = ?', [email], callback);
+    },
+    
+    findByUsernameOrEmail: (identifier, callback) => {
+      db.query(
+        'SELECT * FROM users WHERE username = ? OR email = ?',
+        [identifier, identifier],
+        callback
+      );
     }
+
   };
   
 module.exports = User;

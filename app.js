@@ -5,6 +5,8 @@ const cors = require('cors');
 // Importar rutas
 const authRoutes = require('./routes/authRoutes');
 const profileRoutes = require('./routes/profileRoutes');
+const photoRoutes = require("./routes/photoRoutes");
+const { authenticateToken } = require("./middlewares/authMiddleware");
 
 const app = express();
 
@@ -15,6 +17,8 @@ app.use(cors());
 // Rutas
 app.use('/auth', authRoutes);
 app.use('/profile', profileRoutes);
+app.use("/photos", authenticateToken, photoRoutes);
+
 // app.use('/match', matchRoutes);
 
 

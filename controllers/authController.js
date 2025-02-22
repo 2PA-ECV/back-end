@@ -52,9 +52,9 @@ exports.register = async (req, res) => {
 };
 
 exports.login = (req, res) => {
-    const { email, password } = req.body;
+    const { emailorusername, password } = req.body;
   
-    User.findByEmail(email, (err, results) => {
+    User.findByEmail(emailorusername, (err, results) => {
         if (err) return res.status(500).json({ error: err.message });
   
         if (results.length === 0) return res.status(401).json({ error: 'Usuario no encontrado' });
