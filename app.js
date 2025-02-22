@@ -5,7 +5,6 @@ const cors = require('cors');
 // Importar rutas
 const authRoutes = require('./routes/authRoutes');
 const profileRoutes = require('./routes/profileRoutes');
-// Si implementas rutas para matches, chats, etc., las importarías aquí
 
 const app = express();
 
@@ -16,7 +15,8 @@ app.use(cors());
 // Rutas
 app.use('/auth', authRoutes);
 app.use('/profile', profileRoutes);
-// app.use('/match', matchRoutes); // Descomenta si ya tienes estas rutas
+// app.use('/match', matchRoutes);
+
 
 // Ruta principal de prueba
 app.get('/', (req, res) => {
@@ -24,7 +24,7 @@ app.get('/', (req, res) => {
 });
 
 // Iniciar el servidor
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT;
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });

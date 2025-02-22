@@ -20,7 +20,7 @@ exports.register = async (req, res) => {
             });
         });
 
-        if (existingUser .length > 0) {
+        if (existingUser.length > 0) {
             return res.status(400).json({ error: 'El correo electrónico ya está en uso' });
         }
 
