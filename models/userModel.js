@@ -21,8 +21,23 @@ const User = {
         [identifier, identifier],
         callback
       );
-    }
+    },
 
+    getNextUser: async (userId) => {
+      return new Promise((resolve, reject) => {
+          db.query(
+              "SELECT id, name FROM users WHERE id != ? ORDER BY RAND() LIMIT 1",
+              [userId],
+              (err, result) => {
+                  if (err) {
+                      reject(err);
+                  } else {
+                      resolve(result.length > 0 ? result[0] : null);
+                  }
+              }
+          );
+      });
+    }
   };
   
 module.exports = User;

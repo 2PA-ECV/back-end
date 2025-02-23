@@ -6,5 +6,6 @@ const authMiddleware = require("../middlewares/authMiddleware");
 router.get("/", authMiddleware, photoController.getUserPhotos);
 router.post("/", authMiddleware, photoController.uploadMiddleware, photoController.uploadPhoto);
 router.delete("/:id", authMiddleware, photoController.deletePhoto);
+router.get("/:userId", authMiddleware, photoController.getOtherUserPhotos);
 
 module.exports = router;

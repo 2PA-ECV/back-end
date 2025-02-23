@@ -47,5 +47,17 @@ exports.deletePhoto = async (req, res) => {
     }
 };
 
+exports.getOtherUserPhotos = async (req, res) => {
+    const userId = req.params.userId;
+
+    try {
+        const photos = await Photo.getPhotosByUserId(userId);
+        res.json(photos);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Error al obtener fotos" });
+    }
+};
+
 // Middleware para subir archivos con Multer
 exports.uploadMiddleware = upload.single("photo");
