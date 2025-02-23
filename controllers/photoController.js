@@ -14,8 +14,9 @@ const upload = multer({ storage });
 
 // Obtener todas las fotos del usuario
 exports.getUserPhotos = async (req, res) => {
+    const user_id = req.user.id;
     try {
-        const photos = await Photo.getPhotosByUserId(req.user.user_id);
+        const photos = await Photo.getPhotosByUserId(user_id);
         res.json(photos);
     } catch (error) {
         res.status(500).json({ error: "Error al obtener fotos" });
@@ -24,9 +25,10 @@ exports.getUserPhotos = async (req, res) => {
 
 // Subir una nueva foto
 exports.uploadPhoto = async (req, res) => {
+    const user_id = req.user.id;
     try {
         const photoUrl = `/uploads/${req.file.filename}`;
-        await Photo.addPhoto(req.user.user_id, photoUrl);
+        await Photo.addPhoto(user_id, photoUrl);
         res.status(201).json({ message: "Foto subida", photo_url: photoUrl });
     } catch (error) {
         res.status(500).json({ error: "Error al subir la foto" });
@@ -35,9 +37,10 @@ exports.uploadPhoto = async (req, res) => {
 
 // Eliminar una foto
 exports.deletePhoto = async (req, res) => {
+    const user_id = req.user.id;
     try {
         const { id } = req.params;
-        await Photo.deletePhoto(req.user.user_id, id);
+        await Photo.deletePhoto(user_id, id);
         res.json({ message: "Foto eliminada" });
     } catch (error) {
         res.status(500).json({ error: "Error al eliminar la foto" });
