@@ -73,7 +73,7 @@ exports.deletePhoto = async (req, res) => {
             return res.status(404).json({ error: "Foto no encontrada o no tienes permisos" });
         }
 
-        const filePath = path.join(__dirname, "..", photo.url);
+        const filePath = path.join("..", photo.url);
         
         // Eliminar archivo del servidor
         fs.unlink(filePath, async (err) => {

@@ -10,6 +10,15 @@ const Photo = {
         });
     },
 
+    getPhotoById: async (id) => {
+        return new Promise((resolve, reject) => {
+            db.query("SELECT * FROM photos WHERE id = ?", [id], (err, result) => {
+                if (err) reject(err);
+                resolve(result);
+            });
+        });
+    },
+
     addPhoto: async (userId, photoUrl) => {
         return new Promise((resolve, reject) => {
             db.query("INSERT INTO photos (user_id, photo_url) VALUES (?, ?)", [userId, photoUrl], (err, result) => {
@@ -21,7 +30,7 @@ const Photo = {
 
     deletePhoto: async (userId, photoId) => {
         return new Promise((resolve, reject) => {
-            db.query("DELETE FROM photos WHERE photo_id = ? AND user_id = ?", [photoId, userId], (err, result) => {
+            db.query("DELETE FROM photos WHERE photo_url = ?", [photoId, userId], (err, result) => {
                 if (err) reject(err);
                 resolve(result);
             });

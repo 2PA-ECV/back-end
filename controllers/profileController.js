@@ -21,7 +21,7 @@ const getProfile = async (req, res) => {
 const createOrUpdateProfile = async (req, res) => {
     try {
         const user_id = req.user.id; // Extraído del token
-        const { bio, interests, min_age_preference, max_age_preference, preferred_city } = req.body;
+        const { bio, interests, min_age_preference, max_age_preference, preferred_city, altura, lifestyle, preferences } = req.body;
 
         // Validaciones básicas
         if (!bio || !interests || !min_age_preference || !max_age_preference || !preferred_city) {
@@ -29,7 +29,7 @@ const createOrUpdateProfile = async (req, res) => {
         }
 
         const result = await Profile.createOrUpdateProfile(
-            user_id, bio, interests, min_age_preference, max_age_preference, preferred_city
+            user_id, bio, interests, min_age_preference, max_age_preference, preferred_city, altura, lifestyle, preferences
         );
 
         return res.status(200).json({ message: "Perfil guardado exitosamente." });

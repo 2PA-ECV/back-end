@@ -10,15 +10,16 @@ const Profile = {
         });
     },
 
-    createOrUpdateProfile: async (user_id, bio, interests, min_age_preference, max_age_preference, preferred_city) => {
+    createOrUpdateProfile: async (user_id, bio, interests, min_age_preference, max_age_preference, preferred_city, altura, lifestyle, preferences) => {
         return new Promise((resolve, reject) => {
             db.query(
-                `INSERT INTO profiles (user_id, bio, interests, min_age_preference, max_age_preference, preferred_city)
-                VALUES (?, ?, ?, ?, ?, ?) 
+                `INSERT INTO profiles (user_id, bio, interests, min_age_preference, max_age_preference, preferred_city, height_cm, lifestyle, sexual_preferences)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) 
                 ON DUPLICATE KEY UPDATE bio=VALUES(bio), interests=VALUES(interests),
                 min_age_preference=VALUES(min_age_preference), max_age_preference=VALUES(max_age_preference),
-                preferred_city=VALUES(preferred_city)`,
-                [user_id, bio, interests, min_age_preference, max_age_preference, preferred_city],
+                preferred_city=VALUES(preferred_city), height_cm=VALUES(height_cm),
+                lifestyle=VALUES(lifestyle), sexual_preferences=VALUES(sexual_preferences)`,
+                [user_id, bio, interests, min_age_preference, max_age_preference, preferred_city, altura, lifestyle, preferences],
                 (err, result) => {
                     if (err) reject(err);
                     resolve(result);
@@ -26,6 +27,7 @@ const Profile = {
             );
         });
     }
+    
 };
 
 module.exports = Profile;

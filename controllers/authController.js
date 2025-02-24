@@ -4,7 +4,7 @@ require('dotenv').config();
 const md5 = require('md5'); 
 
 exports.register = async (req, res) => {
-    const { name, email, username, password, birth_date, gender, city, profile_picture } = req.body;
+    const { name, email, username, password, dob, gender, city, profile_picture } = req.body;
 
     // Validación de campos obligatorios
     if (!name || !email || !password || !gender || !username) {
@@ -35,7 +35,7 @@ exports.register = async (req, res) => {
                 username,
                 email,
                 password: safe_password, 
-                birth_date, 
+                dob, 
                 gender, 
                 city, 
                 profile_picture: profile_picture || null 
