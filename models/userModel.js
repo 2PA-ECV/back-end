@@ -26,7 +26,14 @@ const User = {
     getNextUser: async (userId) => {
       return new Promise((resolve, reject) => {
           db.query(
-              "SELECT id, name FROM users WHERE id != ? ORDER BY RAND() LIMIT 1",
+              `SELECT u.user_id, u.name, 
+                      TIMESTAMPDIFF(YEAR, u.birth_date, CURDATE()) AS age, 
+                      p.bio
+               FROM users u
+               LEFT JOIN profiles p ON u.user_id = p.user_id
+               WHERE u.user_id != ? 
+               ORDER BY RAND() 
+               LIMIT 1`,
               [userId],
               (err, result) => {
                   if (err) {
@@ -37,7 +44,25 @@ const User = {
               }
           );
       });
-    }
+    },
+  
+
+    getUser: async (userId) => {
+      return new Promise((resolve, reject) => {
+          db.query(
+              "SELECT * FROM users WHERE user_id = ?",
+              [userId],
+              (err, result) => {
+                  if (err) {
+                      reject(err);
+                  } else {
+                      resolve(result.length > 0 ? result[0] : null);
+                  }
+              }
+          );
+      });
+    } 
+
   };
   
 module.exports = User;

@@ -6,6 +6,7 @@ const cors = require('cors');
 const authRoutes = require('./routes/authRoutes');
 const profileRoutes = require('./routes/profileRoutes');
 const photoRoutes = require("./routes/photoRoutes");
+const userRoutes = require("./routes/userRoutes");
 
 const app = express();
 
@@ -17,6 +18,7 @@ app.use(cors());
 app.use('/auth', authRoutes);
 app.use('/profile', profileRoutes);
 app.use("/photos", photoRoutes);
+app.use("/user", userRoutes);
 
 // app.use('/match', matchRoutes);
 

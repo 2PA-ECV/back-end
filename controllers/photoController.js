@@ -1,16 +1,36 @@
 const Photo = require("../models/photoModel");
 const multer = require("multer");
 const path = require("path");
+const fs = require("fs");
+
+// Extensiones permitidas
+const allowedExtensions = [".png", ".jpg", ".jpeg", ".gif"];
 
 // Configuración de almacenamiento para Multer
 const storage = multer.diskStorage({
     destination: "uploads/",
     filename: (req, file, cb) => {
+        const ext = path.extname(file.originalname).toLowerCase();
+        if (!allowedExtensions.includes(ext)) {
+            return cb(new Error("Formato de archivo no permitido"));
+        }
         cb(null, `${Date.now()}-${file.originalname}`);
     },
 });
 
-const upload = multer({ storage });
+const upload = multer({
+    storage,
+    fileFilter: (req, file, cb) => {
+        const ext = path.extname(file.originalname).toLowerCase();
+        if (!allowedExtensions.includes(ext)) {
+            return cb(new Error("Solo se permiten imágenes"));
+        }
+        cb(null, true);
+    },
+});
+
+// Middleware para subir archivos con Multer
+exports.uploadMiddleware = upload.single("photo");
 
 // Obtener todas las fotos del usuario
 exports.getUserPhotos = async (req, res) => {
@@ -26,6 +46,12 @@ exports.getUserPhotos = async (req, res) => {
 // Subir una nueva foto
 exports.uploadPhoto = async (req, res) => {
     const user_id = req.user.id;
+    
+    // Validación si no se subió un archivo
+    if (!req.file) {
+        return res.status(400).json({ error: "No se ha subido ninguna foto" });
+    }
+
     try {
         const photoUrl = `/uploads/${req.file.filename}`;
         await Photo.addPhoto(user_id, photoUrl);
@@ -38,15 +64,32 @@ exports.uploadPhoto = async (req, res) => {
 // Eliminar una foto
 exports.deletePhoto = async (req, res) => {
     const user_id = req.user.id;
+    const { id } = req.params;
+
     try {
-        const { id } = req.params;
-        await Photo.deletePhoto(user_id, id);
-        res.json({ message: "Foto eliminada" });
+        const photo = await Photo.getPhotoById(id);
+        
+        if (!photo || photo.user_id !== user_id) {
+            return res.status(404).json({ error: "Foto no encontrada o no tienes permisos" });
+        }
+
+        const filePath = path.join(__dirname, "..", photo.url);
+        
+        // Eliminar archivo del servidor
+        fs.unlink(filePath, async (err) => {
+            if (err) {
+                console.error("Error al eliminar archivo:", err);
+            }
+            await Photo.deletePhoto(user_id, id);
+            res.json({ message: "Foto eliminada" });
+        });
+
     } catch (error) {
         res.status(500).json({ error: "Error al eliminar la foto" });
     }
 };
 
+// Obtener fotos de otro usuario
 exports.getOtherUserPhotos = async (req, res) => {
     const userId = req.params.userId;
 
@@ -58,6 +101,3 @@ exports.getOtherUserPhotos = async (req, res) => {
         res.status(500).json({ error: "Error al obtener fotos" });
     }
 };
-
-// Middleware para subir archivos con Multer
-exports.uploadMiddleware = upload.single("photo");
