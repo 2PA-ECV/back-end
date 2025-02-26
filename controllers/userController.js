@@ -1,3 +1,4 @@
+const logger = require("../logger");
 const User = require("../models/userModel");
 
 exports.getNextUser = async (req, res) => {
@@ -11,7 +12,7 @@ exports.getNextUser = async (req, res) => {
 
         res.json(nextUser);
     } catch (error) {
-        console.error(error);
+        logger.error(error);
         res.status(500).json({ error: "Error al obtener el siguiente usuario" });
     }
 };
@@ -27,7 +28,7 @@ exports.getUser = async (req, res) => {
 
         res.json(user); // Devuelve la información del usuario
     } catch (error) {
-        console.error(error);
+        logger.error(error);
         res.status(500).json({ error: "Error al obtener la información del usuario" });
     }
 };

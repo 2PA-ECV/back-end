@@ -1,3 +1,4 @@
+const logger = require("../logger");
 const Profile = require("../models/profileModel");
 
 // Obtener perfil del usuario autenticado
@@ -12,7 +13,7 @@ const getProfile = async (req, res) => {
 
         return res.status(200).json(profile);
     } catch (error) {
-        console.error("Error al obtener el perfil:", error);
+        logger.error("Error al obtener el perfil:", error);
         return res.status(500).json({ message: "Error interno del servidor." });
     }
 };
@@ -34,7 +35,7 @@ const createOrUpdateProfile = async (req, res) => {
 
         return res.status(200).json({ message: "Perfil guardado exitosamente." });
     } catch (error) {
-        console.error("Error al crear o actualizar el perfil:", error);
+        logger.error("Error al crear o actualizar el perfil:", error);
         return res.status(500).json({ message: "Error interno del servidor." });
     }
 };
