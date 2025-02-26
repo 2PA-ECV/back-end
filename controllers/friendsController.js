@@ -20,6 +20,7 @@ exports.sendFriendRequest = async (req, res) => {
             return res.status(500).json({ error: 'Error al enviar la solicitud.' });
         }
     } catch (error) {
+        console.error(error);
         res.status(500).json({ error: 'Error al enviar la solicitud de amistad.' });
     }
 };
@@ -37,6 +38,7 @@ exports.acceptFriendRequest = async (req, res) => {
             return res.status(500).json({ error: 'Error al aceptar la solicitud.' });
         }
     } catch (error) {
+        console.error(error);
         res.status(500).json({ error: 'Error al aceptar la solicitud.' });
     }
 };
@@ -48,6 +50,7 @@ exports.getPendingRequests = async (req, res) => {
         const pendingRequests = await Friend.getPendingRequests(userId);
         res.json(pendingRequests);
     } catch (error) {
+        console.error(error);
         res.status(500).json({ error: 'Error al obtener las solicitudes pendientes.' });
     }
 };
@@ -63,6 +66,7 @@ exports.searchFriend = async (req, res) => {
             return res.status(404).json({ error: 'Usuario no encontrado.' });
         }
     } catch (error) {
+        console.error(error);
         res.status(500).json({ error: 'Error al buscar el usuario.' });
     }
 };

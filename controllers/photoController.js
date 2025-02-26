@@ -40,7 +40,7 @@ exports.getUserPhotos = async (req, res) => {
         const photos = await Photo.getPhotosByUserId(user_id);
         res.json(photos);
     } catch (error) {
-        logger.error(error);
+        console.error(error);
         res.status(500).json({ error: "Error al obtener fotos" });
     }
 };
@@ -59,7 +59,7 @@ exports.uploadPhoto = async (req, res) => {
         await Photo.addPhoto(user_id, photoUrl);
         res.status(201).json({ message: "Foto subida", photo_url: photoUrl });
     } catch (error) {
-        logger.error(error);
+        console.error(error);
         res.status(500).json({ error: "Error al subir la foto" });
     }
 };
@@ -76,19 +76,19 @@ exports.deletePhoto = async (req, res) => {
             return res.status(404).json({ error: "Foto no encontrada o no tienes permisos" });
         }
 
-        const filePath = path.join("..", photo.url);
+        const filePath = path.join("..", photo.photo_url);
         
         // Eliminar archivo del servidor
         fs.unlink(filePath, async (err) => {
             if (err) {
                 console.error("Error al eliminar archivo:", err);
             }
-            await Photo.deletePhoto(user_id, id);
+            await Photo.deletePhoto(photo.photo_url);
             res.json({ message: "Foto eliminada" });
         });
 
     } catch (error) {
-        logger.error(error);
+        console.error(error);
         res.status(500).json({ error: "Error al eliminar la foto" });
     }
 };
@@ -101,7 +101,7 @@ exports.getOtherUserPhotos = async (req, res) => {
         const photos = await Photo.getPhotosByUserId(userId);
         res.json(photos);
     } catch (error) {
-        logger.error(error);
+        console.error(error);
         res.status(500).json({ error: "Error al obtener fotos" });
     }
 };

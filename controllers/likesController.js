@@ -1,4 +1,3 @@
-const logger = require('../logger');
 const likeModel = require('../models/likesModel');
 
 exports.handleLikeDislike = async (req, res) => {
@@ -14,7 +13,7 @@ exports.handleLikeDislike = async (req, res) => {
         const result = await likeModel.saveLikeDislike(userId, likedUserId, action);
         res.status(201).json(result);
     } catch (error) {
-        logger.error(error);
+        console.error(error);
         res.status(500).json({ message: 'Error al procesar la solicitud' });
     }
 };

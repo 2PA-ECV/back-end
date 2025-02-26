@@ -1,4 +1,3 @@
-const logger = require('./logger');
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
@@ -29,10 +28,6 @@ app.use('/matches', matchesRoutes);
 
 
 
-
-// app.use('/match', matchRoutes);
-
-
 // Ruta principal de prueba
 app.get('/', (req, res) => {
   res.json({ message: 'Servidor corriendo correctamente' });
@@ -41,5 +36,5 @@ app.get('/', (req, res) => {
 // Iniciar el servidor
 const PORT = process.env.PORT;
 app.listen(PORT, () => {
-  logger.info(`Servidor corriendo en http://localhost:${PORT}`);
+  console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });
