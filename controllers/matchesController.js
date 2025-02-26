@@ -1,7 +1,5 @@
 const matchModel = require('../models/matchModel');
 const likeModel = require('../models/likesModel'); 
-const logger = require('../logger');
-
 // Función para verificar si hay un match entre dos usuarios
 exports.checkForMatch = async (req, res) => {
     const userId = req.user.id; 
@@ -22,7 +20,7 @@ exports.checkForMatch = async (req, res) => {
 
         res.status(200).json({ message: 'No hay match' });
     } catch (error) {
-        logger.error(error);
+        console.error(error);
         res.status(500).json({ message: 'Error al verificar el match' });
     }
 };
@@ -35,7 +33,7 @@ exports.getMatchesByUser  = async (req, res) => {
         const matches = await matchModel.getMatchesByUserId(userId);
         res.status(200).json(matches);
     } catch (error) {
-        logger.error(error);
+        console.error(error);
         res.status(500).json({ message: 'Error al obtener los matches' });
     }
 };
