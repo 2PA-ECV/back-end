@@ -2,7 +2,6 @@ const Photo = require("../models/photoModel");
 const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
-const logger = require("../logger");
 
 // Extensiones permitidas
 const allowedExtensions = [".png", ".jpg", ".jpeg", ".gif"];

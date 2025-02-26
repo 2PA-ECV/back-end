@@ -12,7 +12,7 @@ const Photo = {
 
     getPhotoById: async (id) => {
         return new Promise((resolve, reject) => {
-            db.query("SELECT * FROM photos WHERE photo_id = ?", [id], (err, result) => {
+            db.query("SELECT photo_id, photo_url FROM photos WHERE photo_id = ?", [id], (err, result) => {
                 if (err) reject(err);
                 resolve(result);
             });
@@ -28,9 +28,9 @@ const Photo = {
         });
     },
 
-    deletePhoto: async (photoId) => {
+    deletePhoto: async (photoUrl) => {
         return new Promise((resolve, reject) => {
-            db.query("DELETE FROM photos WHERE photo_id = ?", [photoId], (err, result) => {
+            db.query("DELETE FROM photos WHERE photo_url = ?", [photoUrl], (err, result) => {
                 if (err) reject(err);
                 resolve(result);
             });
