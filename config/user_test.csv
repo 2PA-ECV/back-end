@@ -1,0 +1,11 @@
+user_id,name,username,email,password,birth_date,gender,city,registration_date,user_tag
+1,"Juan Pérez",juanperez,juan.perez@example.com,bbbecd1f6c041e1fe7b997fe7e1f7ef0,1990-05-15,male,Madrid,"2025-03-03 16:38:13",#juanperez167
+2,"María García",mariagarcia07,maria.garcia@example.com,bbbecd1f6c041e1fe7b997fe7e1f7ef0,2000-08-22,female,Barcelona,"2025-03-03 16:40:57",#mariagarcia0721
+3,"Carlos López",carloslopez,carlos.lopez@example.com,bbbecd1f6c041e1fe7b997fe7e1f7ef0,2002-02-10,male,Barcelona,"2025-03-03 16:43:12",#carloslopez832
+4,"Ana Martínez",anamartinez,ana.martinez@example.com,bbbecd1f6c041e1fe7b997fe7e1f7ef0,2002-11-30,female,Barcelona,"2025-03-03 16:46:00",#anamartinez440
+5,"Luis Rodríguez",luisrodriguez,luis.rodriguez@example.com,bbbecd1f6c041e1fe7b997fe7e1f7ef0,2003-06-04,male,Madrid,"2025-03-03 16:48:01",#luisrodriguez672
+6,"Sofía Hernández",sofiahernandez,sofia.hernandez@example.com,bbbecd1f6c041e1fe7b997fe7e1f7ef0,2001-07-26,female,Barcelona,"2025-03-03 16:49:09",#sofiahernandez962
+7,"Miguel Díaz",migueldiaz,miguel.diaz@example.com,bbbecd1f6c041e1fe7b997fe7e1f7ef0,2001-01-26,male,Madrid,"2025-03-03 16:50:13",#migueldiaz282
+8,"Elena Ruiz",elenaruiz,elena.ruiz@example.com,bbbecd1f6c041e1fe7b997fe7e1f7ef0,2000-06-07,female,Barcelona,"2025-03-03 16:51:17",#elenaruiz234
+9,"Jorge Sánchez",jorgesanchez,jorge.sanchez@example.com,bbbecd1f6c041e1fe7b997fe7e1f7ef0,2003-12-30,male,Barcelona,"2025-03-03 16:52:48",#jorgesanchez804
+10,"Lucía Gómez",luciagomez,lucia.gomez@example.com,bbbecd1f6c041e1fe7b997fe7e1f7ef0,2004-01-28,female,Madrid,"2025-03-03 16:54:16",#luciagomez658
