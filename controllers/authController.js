@@ -28,6 +28,9 @@ exports.register = async (req, res) => {
         const salt_string = process.env.MD5_SALT_STRING;
         const safe_password = md5(password + salt_string);
 
+        const numeroRandom = Math.floor(Math.random() * 1000) + 1; // Número aleatorio entre 1 y 1000
+        const user_tag = `#${username}${numeroRandom}`;
+
         // Guardar el usuario con la contraseña encriptada
         await new Promise((resolve, reject) => {
             User.create({ 
@@ -38,7 +41,7 @@ exports.register = async (req, res) => {
                 dob, 
                 gender, 
                 city, 
-                profile_picture: profile_picture || null 
+                user_tag
             }, (err, result) => {
                 if (err) return reject(err);
                 resolve(result);
