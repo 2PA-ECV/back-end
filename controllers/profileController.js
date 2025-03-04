@@ -30,9 +30,6 @@ const createOrUpdateProfile = async (req, res) => {
             return res.status(400).json({ message: "Todos los campos son obligatorios." });
         }
 
-        // Obtener la ruta de la imagen subida (si existe)
-        const profile_image = profile_picture ? profile_picture.path : null;
-
         // Llamar al modelo para crear o actualizar el perfil
         const result = await Profile.createOrUpdateProfile(
             user_id,
@@ -44,7 +41,7 @@ const createOrUpdateProfile = async (req, res) => {
             altura,
             lifestyle,
             preferences,
-            profile_image 
+            profile_picture 
         );
 
         return res.status(200).json({ message: "Perfil guardado exitosamente." });
