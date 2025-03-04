@@ -63,6 +63,24 @@ exports.uploadPhoto = async (req, res) => {
     }
 };
 
+exports.uploadProfilePhoto = async (req, res) => {
+    const user_id = req.user.id;
+    
+    // Validación si no se subió un archivo
+    if (!req.file) {
+        return res.status(400).json({ error: "No se ha subido ninguna foto" });
+    }
+
+    try {
+        const photoUrl = `/uploads/${req.file.filename}`;
+        await Photo.addProfilePhoto(user_id, photoUrl);
+        res.status(201).json({ message: "Foto subida", photo_url: photoUrl });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Error al subir la foto" });
+    }
+};
+
 // Eliminar una foto
 exports.deletePhoto = async (req, res) => {
     const user_id = req.user.id;

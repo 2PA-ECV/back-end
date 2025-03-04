@@ -28,6 +28,23 @@ const Photo = {
         });
     },
 
+    addProfilePhoto: async (userId, photoUrl) => {
+        return new Promise((resolve, reject) => {
+            db.query(
+                "UPDATE profiles SET profile_picture = ? WHERE user_id = ?",
+                [photoUrl, userId],
+                (err, result) => {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        resolve(result);
+                    }
+                }
+            );
+        });
+    },
+    
+
     deletePhoto: async (photoUrl) => {
         return new Promise((resolve, reject) => {
             db.query("DELETE FROM photos WHERE photo_url = ?", [photoUrl], (err, result) => {
