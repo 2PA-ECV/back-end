@@ -1,4 +1,6 @@
 const Profile = require("../models/profileModel");
+const upload = require("../config/multer-config"); 
+
 
 // Obtener perfil del usuario autenticado
 const getProfile = async (req, res) => {
@@ -21,15 +23,28 @@ const getProfile = async (req, res) => {
 const createOrUpdateProfile = async (req, res) => {
     try {
         const user_id = req.user.id; // Extraído del token
-        const { bio, interests, min_age_preference, max_age_preference, preferred_city, altura, lifestyle, preferences } = req.body;
+        const { bio, interests, min_age_preference, max_age_preference, preferred_city, altura, lifestyle, preferences, profile_picture } = req.body;
 
         // Validaciones básicas
         if (!bio || !interests || !min_age_preference || !max_age_preference || !preferred_city) {
             return res.status(400).json({ message: "Todos los campos son obligatorios." });
         }
 
+        // Obtener la ruta de la imagen subida (si existe)
+        const profile_image = profile_picture ? profile_picture.path : null;
+
+        // Llamar al modelo para crear o actualizar el perfil
         const result = await Profile.createOrUpdateProfile(
-            user_id, bio, interests, min_age_preference, max_age_preference, preferred_city, altura, lifestyle, preferences
+            user_id,
+            bio,
+            interests,
+            min_age_preference,
+            max_age_preference,
+            preferred_city,
+            altura,
+            lifestyle,
+            preferences,
+            profile_image 
         );
 
         return res.status(200).json({ message: "Perfil guardado exitosamente." });
@@ -41,5 +56,5 @@ const createOrUpdateProfile = async (req, res) => {
 
 module.exports = {
     getProfile,
-    createOrUpdateProfile
+    createOrUpdateProfile: [upload.single('profile_image'), createOrUpdateProfile] // Añadir middleware de Multer
 };

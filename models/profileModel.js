@@ -1,4 +1,4 @@
-const db = require("../config/database");
+const db = require('../config/database');
 
 const Profile = {
     getProfile: async (user_id) => {
@@ -10,19 +10,43 @@ const Profile = {
         });
     },
 
-    createOrUpdateProfile: async (user_id, bio, interests, min_age_preference, max_age_preference, preferred_city, altura, lifestyle, preferences) => {
+    createOrUpdateProfile : async (user_id, bio, interests, min_age_preference, max_age_preference, preferred_city, altura, lifestyle, preferences, profile_picture) => {
         return new Promise((resolve, reject) => {
+            const query = `
+                INSERT INTO profiles (user_id, bio, interests, min_age_preference, max_age_preference, preferred_city, altura, lifestyle, preferences, profile_picture)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                ON DUPLICATE KEY UPDATE
+                    bio = VALUES(bio),
+                    interests = VALUES(interests),
+                    min_age_preference = VALUES(min_age_preference),
+                    max_age_preference = VALUES(max_age_preference),
+                    preferred_city = VALUES(preferred_city),
+                    altura = VALUES(altura),
+                    lifestyle = VALUES(lifestyle),
+                    preferences = VALUES(preferences),
+                    profile_picture = VALUES(profile_picture);
+            `;
+    
             db.query(
-                `INSERT INTO profiles (user_id, bio, interests, min_age_preference, max_age_preference, preferred_city, height_cm, lifestyle, sexual_preferences)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) 
-                ON DUPLICATE KEY UPDATE bio=VALUES(bio), interests=VALUES(interests),
-                min_age_preference=VALUES(min_age_preference), max_age_preference=VALUES(max_age_preference),
-                preferred_city=VALUES(preferred_city), height_cm=VALUES(height_cm),
-                lifestyle=VALUES(lifestyle), sexual_preferences=VALUES(sexual_preferences)`,
-                [user_id, bio, interests, min_age_preference, max_age_preference, preferred_city, altura, lifestyle, preferences],
+                query,
+                [
+                    user_id, 
+                    bio, 
+                    JSON.stringify(interests), 
+                    min_age_preference, 
+                    max_age_preference, 
+                    preferred_city, 
+                    altura, 
+                    JSON.stringify(lifestyle), 
+                    JSON.stringify(preferences), 
+                    profile_picture
+                ],
                 (err, result) => {
-                    if (err) reject(err);
-                    resolve(result);
+                    if (err) {
+                        reject(err);
+                    } else {
+                        resolve(result);
+                    }
                 }
             );
         });
