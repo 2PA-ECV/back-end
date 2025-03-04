@@ -1,4 +1,5 @@
 const db = require('../config/database');
+const { getOtherProfile } = require('../controllers/profileController');
 
 const Profile = {
     getProfile: async (user_id) => {
@@ -8,6 +9,14 @@ const Profile = {
                 resolve(result.length > 0 ? result[0] : null);
             });
         });
+    },
+
+    getOtherProfile: async (user_id) => {
+        return new Promise((resolve, reject) => {
+            db.query("SELECT username, profile_picture FROM profiles JOIN users ON profiles.user_id = users.user_id WHERE profiles.user_id = ?", [user_id], (err, result) => {
+                if (err) reject(err);
+                resolve(result.length > 0 ? result[0] : null);
+            });});
     },
 
     createOrUpdateProfile : async (user_id, bio, interests, min_age_preference, max_age_preference, preferred_city, altura, lifestyle, preferences, profile_picture) => {

@@ -51,7 +51,24 @@ const createOrUpdateProfile = async (req, res) => {
     }
 };
 
+const getOtherProfile = async (req, res) => {
+    try {
+        const user_id = req.params.userId;
+        const profile = await Profile.getProfile(user_id);
+
+        if (!profile) {
+            return res.status(404).json({ message: "Perfil no encontrado." });
+        }
+
+        return res.status(200).json(profile);
+    } catch (error) {
+        console.error("Error al obtener el perfil:", error);
+        return res.status(500).json({ message: "Error interno del servidor." });
+    }
+}
+
 module.exports = {
     getProfile,
+    getOtherProfile,
     createOrUpdateProfile: [upload.single('profile_image'), createOrUpdateProfile] // Añadir middleware de Multer
 };
