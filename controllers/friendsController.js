@@ -70,3 +70,22 @@ exports.searchFriend = async (req, res) => {
         res.status(500).json({ error: 'Error al buscar el usuario.' });
     }
 };
+
+// Rechazar solicitud de amistad
+exports.rejectFriendRequest = async (req, res) => {
+    try {
+        const userId = req.user.id;
+        const { requestId } = req.body;
+
+        const rejected = await Friend.rejectFriendRequest(userId, requestId);
+        if (rejected) {
+            return res.status(200).json({ message: 'Solicitud de amistad rechazada.' });
+        } else {
+            return res.status(500).json({ error: 'Error al rechazar la solicitud.' });
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Error al rechazar la solicitud.' });
+    }
+};
+

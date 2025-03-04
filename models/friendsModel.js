@@ -83,6 +83,21 @@ const Friend = {
             );
         });
     }
+
+    // Rechazar solicitud de amistad
+    rejectFriendRequest: (userId, friendshipId) => {
+        return new Promise((resolve, reject) => {
+            db.query(
+                "DELETE FROM friends WHERE friendship_id = ? AND (user_id_1 = ? OR user_id_2 = ?)",
+                [friendshipId, userId, userId],
+                (err, result) => {
+                    if (err) reject(err);
+                    resolve({ message: 'Solicitud de amistad rechazada.' });
+                }
+            );
+        });
+    }
+
 };
 
 module.exports = Friend;
