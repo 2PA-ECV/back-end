@@ -13,6 +13,6 @@ router.post('/accept-request', authMiddleware, friendsController.acceptFriendReq
 router.get('/pending-requests', authMiddleware, friendsController.getPendingRequests);
 
 // Ruta para buscar a un amigo por su hashtag (nombre de usuario)
-router.get('/search-friend', authMiddleware, friendsController.searchFriend);
+router.get('/search', authMiddleware, friendsController.searchFriend);
 
 module.exports = router;
