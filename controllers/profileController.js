@@ -54,7 +54,7 @@ const createOrUpdateProfile = async (req, res) => {
 const getOtherProfile = async (req, res) => {
     try {
         const user_id = req.params.userId;
-        const profile = await Profile.getProfile(user_id);
+        const profile = await Profile.getOtherProfile(user_id);
 
         if (!profile) {
             return res.status(404).json({ message: "Perfil no encontrado." });
