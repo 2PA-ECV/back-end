@@ -1,5 +1,6 @@
 const matchModel = require('../models/matchModel');
 const likeModel = require('../models/likesModel'); 
+const e = require('express');
 // Función para verificar si hay un match entre dos usuarios
 exports.checkForMatch = async (req, res) => {
     const userId = req.user.id; 
@@ -35,5 +36,17 @@ exports.getMatchesByUser  = async (req, res) => {
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Error al obtener los matches' });
+    }
+};
+
+exports.getMatchById = async (req, res) => {
+    const matchId = req.params.matchId; 
+
+    try {
+        const match = await matchModel.getMatchById(matchId);
+        res.status(200).json(match);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error al obtener el match' });
     }
 };

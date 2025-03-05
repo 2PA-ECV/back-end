@@ -33,3 +33,20 @@ exports.getMatchesByUserId = async (userId) => {
         });
     });
 };
+
+exports.getMatchById = async (matchId) => {        
+    const query = `
+        SELECT * FROM matches
+        WHERE match_id = ?
+    `;
+    const values = [matchId];
+
+    return new Promise((resolve, reject) => {
+        db.query(query, values, (error, results) => {
+            if (error) {
+                return reject(error);
+            }
+            resolve(results.length > 0 ? results[0] : null);
+        });
+    });
+}
