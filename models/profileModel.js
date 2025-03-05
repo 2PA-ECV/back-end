@@ -13,11 +13,20 @@ const Profile = {
 
     getOtherProfile: async (user_id) => {
         return new Promise((resolve, reject) => {
-            db.query("SELECT username, profile_picture FROM profiles JOIN users ON profiles.user_id = users.user_id WHERE profiles.user_id = ?", [user_id], (err, result) => {
-                if (err) reject(err);
-                resolve(result.length > 0 ? result[0] : null);
-            });});
+            db.query(
+                `SELECT users.username, profiles.profile_picture 
+                 FROM users 
+                 LEFT JOIN profiles ON users.user_id = profiles.user_id 
+                 WHERE users.user_id = ?`,
+                [user_id],
+                (err, result) => {
+                    if (err) return reject(err);
+                    resolve(result.length > 0 ? result[0] : { username: null, profile_picture: null });
+                }
+            );
+        });
     },
+    
 
     createOrUpdateProfile : async (user_id, bio, interests, min_age_preference, max_age_preference, preferred_city, altura, lifestyle, preferences, profile_picture) => {
         return new Promise((resolve, reject) => {
