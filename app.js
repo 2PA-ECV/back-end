@@ -25,6 +25,7 @@ app.use("/user", userRoutes);
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/likes', likesRoutes);
 app.use('/matches', matchesRoutes);
+app.use('/friends', require('./routes/friendsRoutes'));
 
 
 

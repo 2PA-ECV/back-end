@@ -6,6 +6,9 @@ const authMiddleware = require('../middlewares/authMiddleware');
 // Ruta para enviar una solicitud de amistad
 router.post('/send-request', authMiddleware, friendsController.sendFriendRequest);
 
+//Obtener amigos
+router.get('/', authMiddleware, friendsController.getFriends);
+
 // Ruta para aceptar una solicitud de amistad
 router.post('/accept-request', authMiddleware, friendsController.acceptFriendRequest);
 
@@ -13,8 +16,10 @@ router.post('/accept-request', authMiddleware, friendsController.acceptFriendReq
 router.get('/pending-requests', authMiddleware, friendsController.getPendingRequests);
 
 // Ruta para buscar a un amigo por su hashtag 
-router.get('/search', authMiddleware, friendsController.searchFriend);
+router.get('/search/:userTag', authMiddleware, friendsController.searchFriend);
 
 router.post('/reject-request', authMiddleware, friendsController.rejectFriendRequest);
+
+router.post('/delete-friend', authMiddleware, friendsController.deleteFriend);
 
 module.exports = router;

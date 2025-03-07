@@ -15,7 +15,7 @@ const Friend = {
                     } else {
                         // Si no existe solicitud, crear una nueva solicitud
                         db.query(
-                            "INSERT INTO friends (user_id_1, user_id_2, status, date) VALUES (?, ?, 'pendiente', NOW())",
+                            "INSERT INTO friends (user_id_1, user_id_2, status, date) VALUES (?, ?, 'pending', NOW())",
                             [userId, targetUserId],
                             (err, result) => {
                                 if (err) reject(err);
@@ -32,8 +32,22 @@ const Friend = {
     acceptFriendRequest: (userId, friendshipId) => {
         return new Promise((resolve, reject) => {
             db.query(
-                "UPDATE friends SET status = 'aceptado' WHERE friendship_id = ? AND (user_id_1 = ? OR user_id_2 = ?)",
-                [friendshipId, userId, userId],
+                "UPDATE friends SET status = 'confirmed' WHERE (user_id_1 = ? AND user_id_2 = ?) OR (user_id_1 = ? AND user_id_2 = ?)",
+                [userId, targetUserId, targetUserId, userId], // Uso de variables correctas
+                (err, result) => {
+                    if (err) reject(err);
+                    resolve({ message: 'Solicitud de amistad aceptada.' });
+                }
+            );
+        });
+    },
+
+    // Rechazar solicitud de amistad
+    rejectFriendRequest: (userId, targetUserId) => {
+        return new Promise((resolve, reject) => {
+            db.query(
+                "UPDATE friends SET status = 'declined' WHERE (user_id_1 = ? AND user_id_2 = ?) OR (user_id_1 = ? AND user_id_2 = ?)",
+                [userId, targetUserId, targetUserId, userId], // Uso de variables correctas
                 (err, result) => {
                     if (err) reject(err);
                     resolve({ message: 'Solicitud de amistad aceptada.' });
@@ -46,7 +60,7 @@ const Friend = {
     checkIfFriends: (userId, targetUserId) => {
         return new Promise((resolve, reject) => {
             db.query(
-                "SELECT * FROM friends WHERE ((user_id_1 = ? AND user_id_2 = ?) OR (user_id_1 = ? AND user_id_2 = ?)) AND status = 'aceptado'",
+                "SELECT * FROM friends WHERE ((user_id_1 = ? AND user_id_2 = ?) OR (user_id_1 = ? AND user_id_2 = ?)) AND status = 'confirmed'",
                 [userId, targetUserId, targetUserId, userId],
                 (err, result) => {
                     if (err) reject(err);
@@ -60,7 +74,7 @@ const Friend = {
     getPendingRequests: (userId) => {
         return new Promise((resolve, reject) => {
             db.query(
-                "SELECT * FROM friends WHERE (user_id_1 = ? OR user_id_2 = ?) AND status = 'pendiente'",
+                "SELECT * FROM friends WHERE (user_id_1 = ? OR user_id_2 = ?) AND status = 'pending'",
                 [userId, userId],
                 (err, result) => {
                     if (err) reject(err);
@@ -74,7 +88,7 @@ const Friend = {
     searchFriendByHashtag: (hashtag) => {
         return new Promise((resolve, reject) => {
             db.query(
-                "SELECT * FROM users WHERE CONCAT('#', username) = ?",
+                "SELECT * FROM users WHERE user_tag = ?",
                 [hashtag],
                 (err, result) => {
                     if (err) reject(err);
@@ -82,21 +96,36 @@ const Friend = {
                 }
             );
         });
-    }
+    },
+    
 
-    // Rechazar solicitud de amistad
-    rejectFriendRequest: (userId, friendshipId) => {
+    // Eliminar amistad
+    rejectFriend: (userId, targetUserId) => {
         return new Promise((resolve, reject) => {
             db.query(
-                "DELETE FROM friends WHERE friendship_id = ? AND (user_id_1 = ? OR user_id_2 = ?)",
-                [friendshipId, userId, userId],
+                "DELETE FROM friends WHERE (user_id_1 = ? AND user_id_2 = ?) OR (user_id_1 = ? AND user_id_2 = ?)",
+                [userId, targetUserId, targetUserId, userId], // Uso de variables correctas
                 (err, result) => {
                     if (err) reject(err);
-                    resolve({ message: 'Solicitud de amistad rechazada.' });
+                    resolve({ message: 'Eliminación de amistad' });
+                }
+            );
+        });
+    },
+
+    getFriends: (userId) => {
+        return new Promise((resolve, reject) => {
+            db.query(
+                "SELECT * FROM friends WHERE (user_id_1 = ? OR user_id_2 = ?) AND status = 'confirmed'",
+                [userId, userId],
+                (err, result) => {
+                    if (err) reject(err);
+                    resolve(result);
                 }
             );
         });
     }
+
 
 };
 
