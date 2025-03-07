@@ -32,3 +32,18 @@ exports.getUser = async (req, res) => {
     }
 };
 
+exports.getUserById = async (req, res) => {
+    const userId = req.params.id;
+
+    try {
+        const user = await User.getUser(userId);
+        if (!user) {
+            return res.status(404).json({ error: "Usuario no encontrado" });
+        }
+
+        res.json(user); // Devuelve la información del usuario
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Error al obtener la información del usuario" });
+    }
+}
