@@ -29,7 +29,7 @@ const Friend = {
     },
 
     // Aceptar solicitud de amistad
-    acceptFriendRequest: (userId, friendshipId) => {
+    acceptFriendRequest: (userId, targetUserId) => {
         return new Promise((resolve, reject) => {
             db.query(
                 "UPDATE friends SET status = 'confirmed' WHERE (user_id_1 = ? AND user_id_2 = ?) OR (user_id_1 = ? AND user_id_2 = ?)",
@@ -104,10 +104,10 @@ const Friend = {
         return new Promise((resolve, reject) => {
             db.query(
                 "DELETE FROM friends WHERE (user_id_1 = ? AND user_id_2 = ?) OR (user_id_1 = ? AND user_id_2 = ?)",
-                [userId, targetUserId, targetUserId, userId], // Uso de variables correctas
+                [userId, targetUserId, targetUserId, userId], 
                 (err, result) => {
                     if (err) reject(err);
-                    resolve({ message: 'Eliminación de amistad' });
+                    resolve({ message: 'Amistad eliminada correctamente.' });
                 }
             );
         });
