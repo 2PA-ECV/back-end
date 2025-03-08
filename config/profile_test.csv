@@ -1,0 +1,51 @@
+profile_id,user_id,bio,height,city,interests,sexual_preferences,lifestyle,min_age,max_age
+1,juanperez,"Me gusta la tecnología y el deporte. Siempre buscando nuevas aventuras.",180,Madrid,"Fútbol, tecnología, viajar","Heterosexual","Fiestero",22,35
+2,mariagarcia07,"Amo la moda y la música. Siempre de buen humor.",165,Barcelona,"Moda, música, lectura","Heterosexual","Saludable",20,30
+3,carloslopez,"Me encanta el cine y los videojuegos. Soy un amante de los gatos.",175,Barcelona,"Cine, videojuegos, animales","Heterosexual","Fiestero",21,32
+4,anamartinez,"Disfruto de la naturaleza y el senderismo. Me gusta cocinar y leer.",160,Barcelona,"Senderismo, cocina, lectura","Bisexual","Saludable",22,33
+5,luisrodriguez,"Pasión por el fútbol y la música. Busco siempre la diversión.",185,Madrid,"Fútbol, música, viajes","Heterosexual","Fiestero",23,34
+6,sofiahernandez,"Me gusta bailar y viajar por el mundo. Amo el arte y la cultura.",170,Barcelona,"Bailar, arte, viajes","Homosexual","Fiestero",21,31
+7,migueldiaz,"Amante del cine, la música y los deportes extremos.",180,Madrid,"Cine, deportes, música","Heterosexual","Saludable",22,33
+8,elenaruiz,"Disfruto de la lectura y la moda. Busco siempre la felicidad en todo.",165,Barcelona,"Moda, lectura, viajar","Heterosexual","Saludable",20,30
+9,jorgesanchez,"Aficionado a la tecnología y la música. Me gusta conocer gente nueva.",178,Barcelona,"Tecnología, música, videojuegos","Heterosexual","Fiestero",21,32
+10,luciagomez,"Me encanta leer y practicar deportes al aire libre. Busco paz y armonía.",160,Madrid,"Deportes, lectura, naturaleza","Heterosexual","Saludable",22,33
+11,davidperez,"Fútbol, música y amigos. Me encanta el aire libre y las aventuras.",180,Madrid,"Fútbol, música, aire libre","Heterosexual","Fiestero",22,35
+12,lauragomez,"Me apasiona la fotografía y la moda. Busco nuevas experiencias.",165,Barcelona,"Fotografía, moda, cine","Heterosexual","Saludable",20,30
+13,andresfernandez,"Disfruto de los deportes de aventura y las buenas películas.",182,Madrid,"Deportes, cine, viajes","Heterosexual","Fiestero",21,33
+14,paulagonzalez,"Me encanta hacer senderismo y aprender sobre nuevos destinos.",168,Barcelona,"Senderismo, viajes, fotografía","Heterosexual","Saludable",22,34
+15,josemartin,"Amante de los videojuegos y la música. Siempre buscando lo mejor en la vida.",178,Madrid,"Videojuegos, música, cine","Homosexual","Fiestero",21,32
+16,saralopez,"Me gusta bailar y disfrutar de las pequeñas cosas de la vida.",160,Barcelona,"Bailar, viajar, cine","Bisexual","Saludable",21,30
+17,oscarromero,"Pasión por el fútbol y la tecnología. Siempre en busca de nuevos retos.",185,Madrid,"Fútbol, tecnología, cine","Heterosexual","Fiestero",22,34
+18,beatriznavarro,"Disfruto de las cosas simples: lectura, naturaleza y tiempo con amigos.",162,Barcelona,"Lectura, naturaleza, amigos","Heterosexual","Saludable",20,30
+19,pedrosanchez,"Amante del cine y los deportes extremos. Siempre buscando diversión.",182,Madrid,"Cine, deportes extremos, viajes","Heterosexual","Fiestero",22,33
+20,carladiaz,"Me gusta la fotografía, la moda y explorar nuevos lugares.",168,Barcelona,"Fotografía, moda, cine","Heterosexual","Fiestero",21,31
+21,fernandolopez,"Fútbol, tecnología y música. Me encanta conocer gente nueva.",180,Madrid,"Fútbol, tecnología, música","Heterosexual","Saludable",23,35
+22,albagarcia,"Amante de la naturaleza y las aventuras. Me gusta la lectura y el cine.",160,Barcelona,"Naturaleza, lectura, cine","Homosexual","Saludable",22,33
+23,miguelangelruiz,"Disfruto del fútbol y la tecnología. Me encanta la música electrónica.",183,Madrid,"Fútbol, tecnología, música electrónica","Heterosexual","Fiestero",21,32
+24,irenemartin,"Amo la naturaleza, el cine y la fotografía. Busco experiencias únicas.",170,Barcelona,"Naturaleza, cine, fotografía","Bisexual","Saludable",22,33
+25,raulsanchez,"Me gusta la música y el deporte. Siempre buscando la diversión.",178,Madrid,"Música, deporte, cine","Homosexual","Fiestero",23,34
+26,isabelperez,"Soy una persona activa, me encanta viajar y disfrutar de la naturaleza.",165,Barcelona,"Viajes, naturaleza, deporte","Heterosexual","Saludable",20,30
+27,juanjosegomez,"Me apasiona la música, la tecnología y la lectura.",179,Madrid,"Música, tecnología, lectura","Bisexual","Fiestero",21,32
+28,veronicagarcia,"Me gusta conocer nuevas culturas, la lectura y las artes.",168,Barcelona,"Cultura, lectura, arte","Heterosexual","Saludable",20,30
+29,tomasfernandez,"Amante de los deportes y las aventuras al aire libre.",180,Madrid,"Deportes, aventura, viajes","Heterosexual","Fiestero",22,34
+30,luciaramirez,"Me gusta bailar, leer y descubrir nuevos lugares.",162,Barcelona,"Bailar, leer, viajes","Heterosexual","Saludable",20,30
+31,joseluisgomez,"Aficionado a la tecnología, el cine y el fútbol.",185,Madrid,"Tecnología, cine, fútbol","Heterosexual","Fiestero",21,33
+32,martaperez,"Disfruto de los libros y la naturaleza. Busco aprender siempre.",160,Barcelona,"Lectura, naturaleza, arte","Homosexual","Saludable",22,33
+33,luisgomez,"Soy una persona alegre y activa. Me gusta salir a correr y disfrutar de la vida.",182,Madrid,"Correr, tecnología, cine","Heterosexual","Fiestero",23,34
+34,anaisabelrodriguez,"Amante de la moda, la lectura y la fotografía.",168,Barcelona,"Moda, lectura, fotografía","Bisexual","Saludable",21,30
+35,antoniogomez,"Me gusta salir con amigos y practicar deportes al aire libre.",175,Madrid,"Deportes, amigos, viajes","Heterosexual","Fiestero",20,30
+36,raquelfernandez,"Disfruto de la lectura, la naturaleza y el cine.",160,Barcelona,"Lectura, naturaleza, cine","Homosexual","Saludable",22,32
+37,miguelangelperez,"Amo el cine, los videojuegos y el deporte.",180,Madrid,"Cine, videojuegos, deportes","Heterosexual","Fiestero",21,33
+38,juliagarcia,"Me apasiona la música, el arte y las aventuras al aire libre.",165,Barcelona,"Música, arte, deportes","Bisexual","Saludable",20,30
+39,emiliogonzalez,"Disfruto de la música, el cine y la tecnología. Siempre buscando nuevas experiencias.",178,Madrid,"Música, cine, tecnología","Heterosexual","Fiestero",21,32
+40,claudiaruiz,"Me gusta bailar, leer y conocer nuevas personas.",160,Barcelona,"Bailar, lectura, conocer gente","Heterosexual","Fiestero",20,30
+41,ivanperez,"Amante del cine, la fotografía y los deportes.",185,Madrid,"Cine, fotografía, deportes","Heterosexual","Saludable",22,33
+42,paulasanchez,"Me apasiona la moda, los viajes y las buenas conversaciones.",165,Barcelona,"Moda, viajes, lectura","Heterosexual","Fiestero",21,32
+43,josemariaruiz,"Soy un amante de los deportes y la tecnología. Siempre buscando retos.",183,Madrid,"Deportes, tecnología, viajes","Heterosexual","Fiestero",22,33
+44,elenafdez,"Me encanta el arte, la moda y conocer nuevas personas.",162,Barcelona,"Arte, moda, conocer gente","Heterosexual","Saludable",20,30
+45,alvarorodriguez,"Soy una persona activa, me encanta el cine y el deporte.",180,Madrid,"Cine, deporte, música","Heterosexual","Fiestero",21,32
+46,luciagomez,"Disfruto de la moda, la lectura y viajar.",165,Barcelona,"Moda, lectura, viajar","Bisexual","Saludable",20,30
+47,oscarruiz,"Me encanta el cine, los deportes y la música.",178,Madrid,"Cine, deportes, música","Heterosexual","Fiestero",21,33
+48,aliciafernandez,"Amante de la naturaleza, la lectura y la fotografía.",160,Barcelona,"Naturaleza, lectura, fotografía","Heterosexual","Saludable",21,32
+49,rubensanchez,"Me gusta la música, el cine y practicar deportes.",182,Madrid,"Música, cine, deportes","Heterosexual","Fiestero",22,34
+50,marinalopez,"Me apasiona la lectura, el cine y la música.",160,Barcelona,"Lectura, cine, música","Homosexual","Saludable",20,30
