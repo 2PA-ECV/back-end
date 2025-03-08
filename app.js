@@ -11,6 +11,7 @@ const photoRoutes = require("./routes/photoRoutes");
 const userRoutes = require("./routes/userRoutes");
 const likesRoutes = require('./routes/likesRoutes');
 const matchesRoutes = require("./routes/matchRoutes")
+const chatRooutes = require("./routes/chatRoutes")
 const app = express();
 
 // Middlewares
@@ -26,6 +27,7 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/likes', likesRoutes);
 app.use('/matches', matchesRoutes);
 app.use('/friends', require('./routes/friendsRoutes'));
+app.use('/chat', chatRoutes);
 
 
 

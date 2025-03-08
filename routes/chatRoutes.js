@@ -5,7 +5,7 @@ const authMiddleware = require('../middlewares/authMiddleware');
 
 
 // Ruta para enviar un mensaje
-router.post('/', authMiddleware, chatController.sendMessage);
+router.post('/', authMiddleware, chatController.addMessage);
 
 // Ruta para obtener mensajes de un match
 router.get('/:matchId', authMiddleware, chatController.getMessages);
