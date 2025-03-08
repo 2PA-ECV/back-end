@@ -1,5 +1,6 @@
 const { Server } = require("socket.io");
 const http = require("http");
+const Chat = require("./models/chatModel");
 
 const websocketPort = 4000; // Puerto para WebSockets
 const server = http.createServer();
@@ -20,7 +21,7 @@ io.on("connection", (socket) => {
   });
 
   // Enviar mensaje en un chat
-  socket.on("sendMessage", ({ matchId, senderId, message }) => {
+  socket.on("sendMessage", async ({ matchId, senderId, message }) => {
     const chatMessage = {
       senderId,
       message,
@@ -28,8 +29,13 @@ io.on("connection", (socket) => {
     };
 
     // Enviar mensaje a todos los usuarios en la sala
-    io.to(matchId).emit("receiveMessage", chatMessage);
-    console.log(`Mensaje en sala ${matchId}:`, chatMessage);
+    try {
+      await Chat.addMessage(matchId, senderId, message);
+      io.to(matchId).emit("receiveMessage", chatMessage);
+      console.log(`Mensaje en sala ${matchId}:`, chatMessage);
+    } catch (error) {
+      console.error("Error al guardar mensaje:", error);
+    }
   });
 
   // Desconexión de usuario
