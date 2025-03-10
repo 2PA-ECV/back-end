@@ -27,7 +27,7 @@ const User = {
       return new Promise((resolve, reject) => {
           // Primero, obtenemos el género y la preferencia sexual del usuario actual
           db.query(
-              `SELECT u.gender, p.preference_sexual 
+              `SELECT u.gender, p.preferences 
                FROM users u
                LEFT JOIN profiles p ON u.user_id = p.user_id
                WHERE u.user_id = ?`,
@@ -49,11 +49,11 @@ const User = {
                   let genderFilter = "";
   
                   if (userSexualPreference === 'heterosexual') {
-                      genderFilter = userGender === 'masculino' ? "p.gender = 'femenino'" : "p.gender = 'masculino'";
+                      genderFilter = userGender === 'male' ? "p.gender = 'female'" : "p.gender = 'male'";
                   } else if (userSexualPreference === 'homosexual') {
-                      genderFilter = userGender === 'masculino' ? "p.gender = 'masculino'" : "p.gender = 'femenino'";
+                      genderFilter = userGender === 'male' ? "p.gender = 'male'" : "p.gender = 'female'";
                   } else if (userSexualPreference === 'bisexual') {
-                      genderFilter = "p.gender IN ('masculino', 'femenino')";
+                      genderFilter = "p.gender IN ('male', 'female', 'other')";
                   }
   
                   db.query(
