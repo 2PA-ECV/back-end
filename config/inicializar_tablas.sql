@@ -18,16 +18,19 @@ CREATE TABLE users (
     user_tag VARCHAR(50) UNIQUE NOT NULL -- Campo para el formato #usuario20
 );
 
+DROP TABLE IF EXISTS profiles;
 -- Create the 'profiles' table for additional user information
 CREATE TABLE profiles (
-    profile_id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT NOT NULL,
+    user_id INT PRIMARY KEY,
     bio TEXT, -- User description
-    interests JSON, -- Almacenar intereses como un array de tags
+    interests JSON, -- Store interests as a list of tags
     min_age_preference INT, -- Minimum age preference for matches
     max_age_preference INT, -- Maximum age preference for matches
     preferred_city VARCHAR(100), -- Preferred city for matches
-	profile_picture VARCHAR(255), -- URL or path to profile picture
+    altura INT, -- Height in cm (e.g., 175 for 1.75m)
+    lifestyle JSON, -- Store lifestyle tags as an array
+    preferences VARCHAR(100), 
+    profile_picture VARCHAR(255), -- URL or path to profile picture
     FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
 
@@ -60,6 +63,7 @@ CREATE TABLE likes_between_friends (
     FOREIGN KEY (liked_friend_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 
+DROP TABLE IF EXISTS matches;
 -- Create the 'matches' table to store mutual matches
 CREATE TABLE matches (
     match_id INT AUTO_INCREMENT PRIMARY KEY,
