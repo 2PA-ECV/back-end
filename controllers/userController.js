@@ -17,10 +17,10 @@ exports.getNextUser = async (req, res) => {
 };
 
 exports.getUser = async (req, res) => {
-    const userId = req.user.id; // Asegúrate de que `req.user` tenga la propiedad `id`
+    const userId = req.user.id; 
 
     try {
-        const user = await User.getUser(userId); // Suponiendo que `User.findById` es la función para obtener el usuario
+        const user = await User.getUser(userId); 
         if (!user) {
             return res.status(404).json({ error: "Usuario no encontrado" });
         }

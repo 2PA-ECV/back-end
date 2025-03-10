@@ -5,7 +5,7 @@ const Chat = {
     addMessage: async (match_id, sender_id, message) => {
         return new Promise((resolve, reject) => {
             db.query(
-                "INSERT INTO messages (match_id, sender_user_id, message, date) VALUES (?, ?, ?, NOW())",
+                "INSERT INTO messages (match_id, sender_user_id, message, sent_at) VALUES (?, ?, ?, NOW())",
                 [match_id, sender_id, message],
                 (err, result) => {
                     if (err) reject(err);
@@ -19,7 +19,7 @@ const Chat = {
     getMessages: async (match_id) => {
         return new Promise((resolve, reject) => {
             db.query(
-                "SELECT sender_user_id AS senderId, message, date FROM messages WHERE match_id = ? ORDER BY date ASC",
+                "SELECT sender_user_id AS senderId, message, sent_at FROM messages WHERE match_id = ? ORDER BY sent_at ASC",
                 [match_id],
                 (err, result) => {
                     if (err) reject(err);
