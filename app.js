@@ -11,7 +11,7 @@ const photoRoutes = require("./routes/photoRoutes");
 const userRoutes = require("./routes/userRoutes");
 const likesRoutes = require('./routes/likesRoutes');
 const matchesRoutes = require("./routes/matchRoutes")
-const chatRooutes = require("./routes/chatRoutes")
+const chatRoutes = require("./routes/chatRoutes")
 const app = express();
 
 // Middlewares
