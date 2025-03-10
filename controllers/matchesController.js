@@ -2,7 +2,7 @@ const matchModel = require('../models/matchModel');
 const likeModel = require('../models/likesModel'); 
 const match2paModel = require('../models/match2paModel');
 
-const e = require('express');
+
 // Función para verificar si hay un match entre dos usuarios
 exports.checkForMatch = async (req, res) => {
     const userId = req.user.id; 
