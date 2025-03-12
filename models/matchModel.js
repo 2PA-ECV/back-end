@@ -80,17 +80,20 @@ exports.checkForDoubleMatch = async (userId, likedUserId) => {
             const likedUser = parseInt(likedUserId, 10);
         
             // Amigos del usuario actual (sin incluir al mismo usuario)
-            if (userId1 === userId || userId2 === userId) {
+            if (userId1 === parseInt(userId)) {
                 console.log(`Amigo del usuario actual encontrado:`, friend);
-                userFriends.push(friend);
+                userFriends.push(userId2);
+            } else if (userId2 === parseInt(userId)) {
+                console.log(`Amigo del usuario actual encontrado:`, friend);
+                userFriends.push(userId1);
             }
         
-            // Amigos del usuario marcado
-            console.log(`Comprobando si userId1 (${userId1}) o userId2 (${userId2}) es igual a likedUserId (${likedUser})`);
-        
-            if (userId1 === likedUser || userId2 === likedUser) {
+            if (userId1 === parseInt(likedUser)) {
                 console.log('Amigo encontrado liked:', friend);
-                likedUserFriends.push(friend);
+                likedUserFriends.push(userId2);
+            }else if (userId2 === parseInt(likedUser)) {
+                console.log('Amigo encontrado liked:', friend);
+                likedUserFriends.push(userId1);
             }
         }
         
@@ -103,37 +106,15 @@ exports.checkForDoubleMatch = async (userId, likedUserId) => {
         }
 
         for (let friend of userFriends) {
-            // Extraer el ID del amigo real, asegurándonos de que sea un número
-            const friendId = parseInt(friend.user_id_1 === userId ? friend.user_id_2 : friend.user_id_1, 10);
-            
-            if (friendId === userId || friendId === likedUserId || isNaN(friendId)) {
-                console.log(`Saltando usuario propio o usuario marcado en userFriends: ${friendId}`);
-                continue;
-            }
-            
-            console.log(`Usuario ${userId} - Amigo encontrado: ${friendId}`);
+            console.log(`Usuario ${userId} - Amigo encontrado: ${friend}`);
+            const friendId = parseInt(friend, 10);
             
             for (let likedFriend of likedUserFriends) {
-                console.log(`Comprobando si hay match entre ${friendId} y ${likedFriend.user_id_1 || likedFriend.user_id_2}`);
+                const likedFriendId = parseInt(likedFriend, 10);
+                console.log(`Comprobando si hay match entre ${friendId} y ${likedFriendId}`);
                 
-                // Extraer el ID del amigo real, asegurándonos de que sea un número
-                let likedFriendId = likedFriend.user_id_1 === likedUserId ? likedFriend.user_id_2 : likedFriend.user_id_1;
-        
-                console.log(`🎯 ID extraído para likedFriend: ${likedFriendId}`);
-        
-                // Filtrar para que no sea el usuario actual ni el likedUserId
-                if (parseInt(likedFriendId) === parseInt(likedUserId)) {
-                    console.log(`🚨 Saltando porque likedFriendId (${likedFriendId}) es igual a likedUserId (${likedUserId})`);
-                    continue;
-                }
-                if (parseInt(likedFriendId) === parseInt(userId)) {
-                    console.log(`🚨 Saltando porque likedFriendId (${likedFriendId}) es igual a userId (${userId})`);
-                    continue;
-                }
                 
-                console.log(`Usuario ${likedUserId} - Amigo encontrado: ${likedFriendId}`);
-                
-                if (parseInt(friendId) !== parseInt(likedFriendId)) {
+                if (friendId !== likedFriendId) {
                     console.log(`Ejecutando consulta de match entre ${friendId} y ${likedFriendId}`);
                     
                     const checkMatchQuery = `
