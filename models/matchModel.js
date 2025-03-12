@@ -47,6 +47,42 @@ exports.createMatch = async (userId1, userId2) => {
     });
 };
 
+exports.checkForDoubleMatch = async (userId, likedUserId) => {
+    // Obtener amigos de ambos usuarios
+    const getFriendsQuery = `
+        SELECT user_id FROM friends WHERE user_id = ? OR user_id = ?;
+    `;
+    
+    const friendsResult = await db.query(getFriendsQuery, [userId, likedUserId]);
+
+    const userFriends = friendsResult.filter(friend => friend.user_id === userId);
+    const likedUserFriends = friendsResult.filter(friend => friend.user_id === likedUserId);
+
+    for (let friend of userFriends) {
+        for (let likedFriend of likedUserFriends) {
+            const checkMatchQuery = `
+                SELECT * FROM match
+                WHERE (user_id_1 = ? AND user_id_2 = ?)
+                    OR (user_id_2 = ? AND user_id_1 = ?);
+            `;
+            
+            const matchResult = await db.query(checkMatchQuery, [friend.user_id, likedFriend.user_id, likedFriend.user_id, friend.user_id]);
+
+            if (matchResult.length > 0) {
+                const createDoubleMatchQuery = `
+                    INSERT INTO matches_2pa (user_id_1, user_id_2, friend_1_id, friend_2_id)
+                    VALUES (?, ?, ?, ?);
+                `;
+                await db.query(createDoubleMatchQuery, [userId, friend.user_id, likedUserId, likedFriend.user_id]);
+                return { match2pa: { userId, friend: friend.user_id, likedUserId, likedFriend: likedFriend.user_id } };
+            }
+        }
+    }
+
+    return null;
+};
+
+
 exports.getMatchesByUserId = async (userId) => {
     const query = `
         SELECT * FROM matches
