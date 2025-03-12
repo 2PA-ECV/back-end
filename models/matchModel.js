@@ -120,25 +120,50 @@ exports.checkForDoubleMatch = async (userId, likedUserId) => {
                     const checkMatchQuery = `
                         SELECT * FROM matches
                         WHERE (user_id_1 = ? AND user_id_2 = ?)
-                           OR (user_id_2 = ? AND user_id_1 = ?);
+                           OR (user_id_1 = ? AND user_id_2 = ?);
                     `;
                     
                     const matchResult = await queryPromise(checkMatchQuery, [friendId, likedFriendId, likedFriendId, friendId]);
                     console.log('Resultado de la comprobación de match:', matchResult);
                     
                     if (matchResult.length > 0) {
-                        console.log('Match encontrado. Creando match doble...');
+                        console.log('Match encontrado. Verificando si el match doble ya existe...');
+                        
+                        const checkExistingMatchQuery = `
+                            SELECT * FROM matches_2pa 
+                            WHERE 
+                            (user_id_1 = ? AND user_id_2 = ? AND friend_1_id = ? AND friend_2_id = ?) OR
+                            (user_id_1 = ? AND user_id_2 = ? AND friend_1_id = ? AND friend_2_id = ?) OR
+                            (user_id_1 = ? AND user_id_2 = ? AND friend_1_id = ? AND friend_2_id = ?) OR
+                            (user_id_1 = ? AND user_id_2 = ? AND friend_1_id = ? AND friend_2_id = ?);
+                        `;
+
+                        const existingMatch = await queryPromise(checkExistingMatchQuery, [
+                            userId, friendId, likedUserId, likedFriendId,  // Original
+                            friendId, userId, likedFriendId, likedUserId,  // Espejo completo
+                            userId, friendId, likedFriendId, likedUserId,  // Invertido dentro de cada par
+                            friendId, userId, likedUserId, likedFriendId   // Espejo del invertido
+                        ]);
+
+                    
+                        if (existingMatch.length > 0) {
+                            console.log('El match doble ya existe. No se insertará nuevamente.');
+                            return { message: 'Match ya existente', match2pa: existingMatch[0] };
+                        }
+                    
+                        console.log('Creando match doble...');
                         const createDoubleMatchQuery = `
                             INSERT INTO matches_2pa (user_id_1, user_id_2, friend_1_id, friend_2_id)
                             VALUES (?, ?, ?, ?);
                         `;
                         await queryPromise(createDoubleMatchQuery, [userId, friendId, likedUserId, likedFriendId]);
                         console.log('Match doble creado:', { userId, friend: friendId, likedUserId, likedFriend: likedFriendId });
-                        
+                    
                         return { match2pa: { userId, friend: friendId, likedUserId, likedFriend: likedFriendId } };
                     } else {
                         console.log(`No se encontró un match entre ${friendId} y ${likedFriendId}.`);
                     }
+                    
                 }
             }
         }
