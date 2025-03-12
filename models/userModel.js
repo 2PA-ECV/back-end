@@ -24,33 +24,57 @@ const User = {
     },
 
     getNextUser: async (userId) => {
-        return new Promise((resolve, reject) => {
-            db.query(
-                `SELECT u.user_id, u.name, 
-                        TIMESTAMPDIFF(YEAR, u.birth_date, CURDATE()) AS age, 
-                        p.bio
-                 FROM users u
-                 LEFT JOIN profiles p ON u.user_id = p.user_id
-                 WHERE u.user_id != ? 
-                 ORDER BY RAND() 
-                 LIMIT 1`,
-                [userId],
-                (err, result) => {
-                    if (err) {
-                        reject(err);
-                        return;
-                    }
-                    resolve(result.length > 0 ? result[0] : null);
-                }
-            );
-        });
+      return new Promise((resolve, reject) => {
+          db.query(
+              `SELECT u.user_id, u.name, 
+                      TIMESTAMPDIFF(YEAR, u.birth_date, CURDATE()) AS age, 
+                      p.bio
+               FROM users u
+               LEFT JOIN profiles p ON u.user_id = p.user_id
+               WHERE u.user_id != ? 
+               AND (
+                  (SELECT COUNT(*) FROM profiles WHERE user_id = ?) = 0
+                  OR
+                  (
+                      (SELECT preferences FROM profiles WHERE user_id = ?) LIKE '%heterosexual%'
+                      AND u.gender != (SELECT gender FROM users WHERE user_id = ?)
+                  )
+                  OR
+                  (
+                      (SELECT preferences FROM profiles WHERE user_id = ?) LIKE '%homosexual%'
+                      AND u.gender = (SELECT gender FROM users WHERE user_id = ?)
+                  )
+                  OR
+                  (
+                      (SELECT preferences FROM profiles WHERE user_id = ?) LIKE '%bisexual%'
+                  )
+                  OR
+                  (
+                      (SELECT preferences FROM profiles WHERE user_id = ?) IS NULL
+                      OR (SELECT preferences FROM profiles WHERE user_id = ?) = ""
+                  )
+              )
+              ORDER BY RAND() 
+              LIMIT 1`,
+              [userId, userId, userId, userId, userId, userId, userId, userId],
+              (err, result) => {
+                  if (err) {
+                      reject(err);
+                      return;
+                  }
+                  resolve(result.length > 0 ? result[0] : null);
+              }
+          );
+      });
+
     },
+  
     
 
     getUser: async (userId) => {
       return new Promise((resolve, reject) => {
           db.query(
-              "SELECT * FROM users WHERE user_id = ?",
+              "SELECT * FROM users LEFT JOIN profiles p ON users.user_id = p.user_id WHERE p.user_id = 9",
               [userId],
               (err, result) => {
                   if (err) {
