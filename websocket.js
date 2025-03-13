@@ -28,9 +28,12 @@ io.on("connection", (socket) => {
       timestamp: new Date()
     };
 
+    if (matchId.startsWith("match-")){
+      const match = matchId.split("-")[1];
+      await Chat.addMessage(match, senderId, message);
+    }
     // Enviar mensaje a todos los usuarios en la sala
     try {
-      await Chat.addMessage(matchId, senderId, message);
       io.to(matchId).emit("receiveMessage", chatMessage);
       console.log(`Mensaje en sala ${matchId}:`, chatMessage);
     } catch (error) {
