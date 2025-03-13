@@ -12,6 +12,8 @@ const userRoutes = require("./routes/userRoutes");
 const likesRoutes = require('./routes/likesRoutes');
 const matchesRoutes = require("./routes/matchRoutes")
 const chatRoutes = require("./routes/chatRoutes")
+const matches2paRoutes = require('./routes/match2paRoutes');
+
 const app = express();
 
 // Middlewares
@@ -28,6 +30,7 @@ app.use('/likes', likesRoutes);
 app.use('/matches', matchesRoutes);
 app.use('/friends', require('./routes/friendsRoutes'));
 app.use('/chat', chatRoutes);
+app.use('/matches2pa', matches2paRoutes);
 
 
 

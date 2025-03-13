@@ -59,6 +59,14 @@ function queryPromise(query, params) {
 }
 
 exports.checkForDoubleMatch = async (userId, likedUserId) => {
+    userId = parseInt(userId, 10);
+    likedUserId = parseInt(likedUserId, 10);
+
+    if (isNaN(userId) || isNaN(likedUserId)) {
+        console.error('Error: userId o likedUserId no son números válidos.');
+        return null;
+    }
+    
     const getFriendsQuery = `
         SELECT user_id_1, user_id_2 FROM friends WHERE user_id_1 = ? OR user_id_2 = ? OR user_id_1 = ? OR user_id_2 = ?;
     `;
